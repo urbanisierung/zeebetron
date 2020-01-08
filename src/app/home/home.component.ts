@@ -26,6 +26,8 @@ export class HomeComponent implements OnInit {
   public workflowFileContent: string;
   public deployResult: string;
 
+  public connected = false;
+
   private viewer = new BpmnViewer();
 
   constructor(
@@ -49,8 +51,17 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public async showTopology() {
+  public async connect() {
     await this.zeebeService.setup(this.config);
+    this.connected = true;
+  }
+
+  public async disconnect() {
+    await this.zeebeService.close();
+    this.connected = false;
+  }
+
+  public async showTopology() {
     this.topology = await this.zeebeService.getTopology();
   }
 

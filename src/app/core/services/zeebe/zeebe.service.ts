@@ -26,6 +26,10 @@ export class ZeebeService {
     );
   }
 
+  public async close() {
+    await this.zeebeClient.close();
+  }
+
   public async getTopology(): Promise<string> {
     console.log(`fetching topology`);
     const topology = await this.zeebeClient.topology();

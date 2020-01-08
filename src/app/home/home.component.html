@@ -23,7 +23,15 @@
     </button>
   </mat-card>
   <mat-card>
-    <button mat-button (click)="showTopology()">topology</button>
+    <button mat-button *ngIf="!connected" (click)="connect()">connect</button>
+    <button mat-button *ngIf="connected" (click)="disconnect()">
+      disconnect
+    </button>
+  </mat-card>
+  <mat-card>
+    <button mat-button *ngIf="connected" (click)="showTopology()">
+      topology
+    </button>
   </mat-card>
   <mat-card *ngIf="topology">
     <p>{{ topology }}</p>
@@ -33,8 +41,12 @@
   </mat-card>
   <mat-card *ngIf="workflowFile">
     <p>{{ workflowFile }}</p>
-    <button mat-button (click)="deployWorkflow()">Deploy workflow</button>
-    <button mat-button (click)="startWorkflow()">Start workflow</button>
+    <button mat-button *ngIf="connected" (click)="deployWorkflow()">
+      Deploy workflow
+    </button>
+    <button mat-button *ngIf="connected" (click)="startWorkflow()">
+      Start workflow
+    </button>
   </mat-card>
   <div #ref></div>
 </div>
