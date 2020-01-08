@@ -26,9 +26,23 @@ export class ZeebeService {
     );
   }
 
-  public async getTopology() {
+  public async getTopology(): Promise<string> {
     console.log(`fetching topology`);
     const topology = await this.zeebeClient.topology();
     return JSON.stringify(topology, null, 2);
+  }
+
+  public async startWorkflow(workflowId: string, payload: any): Promise<any> {
+    const result = await this.zeebeClient.createWorkflowInstance(
+      workflowId,
+      payload
+    );
+    return result;
+  }
+
+  public async deployWorkflow(bpmnFile: string): Promise<any> {
+    console.log(`deploying workflow instance`);
+    const result = await this.zeebeClient.deployWorkflow(bpmnFile);
+    return result;
   }
 }

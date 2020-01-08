@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ConfigService } from "../core/services/config/config.service";
 import { ZeebeService } from "../core/services/zeebe/zeebe.service";
+import { ElectronService } from "../core/services";
 
 @Component({
   selector: "app-home",
@@ -9,7 +10,6 @@ import { ZeebeService } from "../core/services/zeebe/zeebe.service";
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-  public topology: string;
   public clusterId = new FormControl();
   public baseUrl = new FormControl();
   public clientId = new FormControl();
@@ -17,9 +17,14 @@ export class HomeComponent implements OnInit {
   public authUrl = new FormControl();
   private config;
 
+  public topology: string;
+  public workflowFile: string;
+  public deployResult: string;
+
   constructor(
     private zeebeService: ZeebeService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private electronService: ElectronService
   ) {
     const promise = this.configService.get();
     promise.then(c => {
@@ -42,6 +47,11 @@ export class HomeComponent implements OnInit {
     this.topology = await this.zeebeService.getTopology();
   }
 
+  public async deployWorkflow() {
+    const result = await this.zeebeService.deployWorkflow(this.workflowFile);
+    this.deployResult = JSON.stringify(result);
+  }
+
   public async saveConfig() {
     this.config = {
       clusterId: this.clusterId.value,
@@ -51,5 +61,18 @@ export class HomeComponent implements OnInit {
       authUrl: this.authUrl.value
     };
     await this.configService.save(this.config);
+  }
+
+  public async selectWorkflow() {
+    this.electronService.remote.dialog
+      .showOpenDialog({
+        filters: [{ name: "bpmn", extensions: ["bpmn"] }],
+        properties: ["openFile"]
+      })
+      .then(dialogResponse => {
+        if (!dialogResponse.canceled) {
+          this.workflowFile = dialogResponse.filePaths[0];
+        }
+      });
   }
 }
