@@ -1,52 +1,65 @@
-<div class="container">
-  <h1 class="title">
-    {{ "PAGES.HOME.TITLE" | translate }}
-  </h1>
-  <mat-card>
-    <mat-form-field>
-      <input matInput placeholder="ClusterId" [formControl]="clusterId" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Base URL" [formControl]="baseUrl" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="ClientId" [formControl]="clientId" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="ClientSecret" [formControl]="clientSecret" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Auth URL" [formControl]="authUrl" />
-    </mat-form-field>
-    <button mat-button (click)="saveConfig()">
-      save config
-    </button>
-  </mat-card>
-  <mat-card>
-    <button mat-button *ngIf="!connected" (click)="connect()">connect</button>
-    <button mat-button *ngIf="connected" (click)="disconnect()">
-      disconnect
-    </button>
-  </mat-card>
-  <mat-card>
-    <button mat-button *ngIf="connected" (click)="showTopology()">
-      topology
-    </button>
-  </mat-card>
-  <mat-card *ngIf="topology">
-    <p>{{ topology }}</p>
-  </mat-card>
-  <mat-card>
-    <button mat-button (click)="selectWorkflow()">Select Workflow</button>
-  </mat-card>
-  <mat-card *ngIf="workflowFile">
-    <p>{{ workflowFile }}</p>
-    <button mat-button *ngIf="connected" (click)="deployWorkflow()">
-      Deploy workflow
-    </button>
-    <button mat-button *ngIf="connected" (click)="startWorkflow()">
-      Start workflow
-    </button>
-  </mat-card>
-  <div #ref></div>
-</div>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="snav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1 class="example-app-name">zeebetron</h1>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #snav [mode]="over">
+    hallo
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <h1 class="title">
+      {{ "PAGES.HOME.TITLE" | translate }}
+    </h1>
+    <mat-card>
+      <mat-form-field>
+        <input matInput placeholder="ClusterId" [formControl]="clusterId" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Base URL" [formControl]="baseUrl" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="ClientId" [formControl]="clientId" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="ClientSecret" [formControl]="clientSecret" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Auth URL" [formControl]="authUrl" />
+      </mat-form-field>
+      <button mat-button (click)="saveConfig()">
+        save config
+      </button>
+    </mat-card>
+    <mat-card>
+      <button mat-button *ngIf="!connected" (click)="connect()">connect</button>
+      <button mat-button *ngIf="connected" (click)="disconnect()">
+        disconnect
+      </button>
+    </mat-card>
+    <mat-card>
+      <button mat-button *ngIf="connected" (click)="showTopology()">
+        topology
+      </button>
+    </mat-card>
+    <mat-card *ngIf="topology">
+      <p>{{ topology }}</p>
+    </mat-card>
+    <mat-card>
+      <button mat-button (click)="selectWorkflow()">Select Workflow</button>
+    </mat-card>
+    <mat-card *ngIf="workflowFile">
+      <p>{{ workflowFile }}</p>
+      <button mat-button *ngIf="connected" (click)="deployWorkflow()">
+        Deploy workflow
+      </button>
+      <button mat-button *ngIf="connected" (click)="startWorkflow()">
+        Start workflow
+      </button>
+    </mat-card>
+    <div #ref></div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

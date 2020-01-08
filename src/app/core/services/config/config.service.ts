@@ -10,6 +10,7 @@ export class ConfigService {
   constructor() {
     this.es = window.require("electron-store");
     this.store = new this.es();
+    this.store.get("profiles");
   }
 
   public async save(values) {

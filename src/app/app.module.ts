@@ -1,11 +1,17 @@
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatIconModule
+} from "@angular/material";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatInputModule } from "@angular/material/input";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatCardModule, MatButtonModule } from "@angular/material";
 // NG Translate
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -14,9 +20,8 @@ import "../polyfills";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { CoreModule } from "./core/core.module";
-import { HomeModule } from "./home/home.module";
-import { SharedModule } from "./shared/shared.module";
 import { HomeComponent } from "./home/home.component";
+import { SharedModule } from "./shared/shared.module";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -38,6 +43,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppRoutingModule,
     MatInputModule,
     MatFormFieldModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
