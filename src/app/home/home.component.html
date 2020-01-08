@@ -34,5 +34,7 @@
   <mat-card *ngIf="workflowFile">
     <p>{{ workflowFile }}</p>
     <button mat-button (click)="deployWorkflow()">Deploy workflow</button>
+    <button mat-button (click)="startWorkflow()">Start workflow</button>
   </mat-card>
+  <div #ref></div>
 </div>

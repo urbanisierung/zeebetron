@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ConfigService } from "../core/services/config/config.service";
 import { ZeebeService } from "../core/services/zeebe/zeebe.service";
 import { ElectronService } from "../core/services";
+import BpmnViewer from "bpmn-js";
 
 @Component({
   selector: "app-home",
@@ -10,6 +11,8 @@ import { ElectronService } from "../core/services";
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
+  @ViewChild("ref", null) private el: ElementRef;
+
   public clusterId = new FormControl();
   public baseUrl = new FormControl();
   public clientId = new FormControl();
@@ -19,7 +22,11 @@ export class HomeComponent implements OnInit {
 
   public topology: string;
   public workflowFile: string;
+  public workflowId: string;
+  public workflowFileContent: string;
   public deployResult: string;
+
+  private viewer = new BpmnViewer();
 
   constructor(
     private zeebeService: ZeebeService,
@@ -52,6 +59,13 @@ export class HomeComponent implements OnInit {
     this.deployResult = JSON.stringify(result);
   }
 
+  public async startWorkflow() {
+    const result = await this.zeebeService.startWorkflow(this.workflowId, {
+      name: "test"
+    });
+    console.log(JSON.stringify(result));
+  }
+
   public async saveConfig() {
     this.config = {
       clusterId: this.clusterId.value,
@@ -72,6 +86,27 @@ export class HomeComponent implements OnInit {
       .then(dialogResponse => {
         if (!dialogResponse.canceled) {
           this.workflowFile = dialogResponse.filePaths[0];
+          const raw: Buffer = this.electronService.fs.readFileSync(
+            this.workflowFile
+          );
+          this.workflowFileContent = raw.toString();
+          const parser = require("fast-xml-parser");
+          const options = {
+            attributeNamePrefix: "",
+            ignoreAttributes: false
+          };
+          const json = parser.parse(this.workflowFileContent, options);
+          this.workflowId = json["bpmn:definitions"]["bpmn:process"].id;
+          // this.viewer.destroy();
+          this.viewer.importXML(this.workflowFileContent, error => {
+            if (!error) {
+              console.log("success!");
+              this.viewer.get("canvas").zoom("fit-viewport");
+            } else {
+              console.log("something went wrong:", error);
+            }
+          });
+          this.viewer.attachTo(this.el.nativeElement);
         }
       });
   }
