@@ -7,31 +7,45 @@
 
 <mat-sidenav-container>
   <mat-sidenav #snav [mode]="over">
-    hallo
+    <mat-list>
+      <mat-list-item *ngFor="let profile of profiles" (click)="selectProfile(profile); snav.toggle()">{{
+        profile
+      }}</mat-list-item>
+    </mat-list>
+    <button mat-button (click)="addProfile(); snav.toggle()">
+      add
+    </button>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <h1 class="title">
       {{ "PAGES.HOME.TITLE" | translate }}
     </h1>
-    <mat-card>
+    <mat-card *ngIf="!currentProfile">
+      select or create a profile
+    </mat-card>
+    <mat-card *ngIf="currentProfile">
       <mat-form-field>
-        <input matInput placeholder="ClusterId" [formControl]="clusterId" />
+        <input matInput placeholder="Profile name" [formControl]="profileName" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Base URL" [formControl]="baseUrl" />
+        <input matInput placeholder="Address" [formControl]="address" />
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="ClientId" [formControl]="clientId" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="ClientSecret" [formControl]="clientSecret" />
+        <input
+          matInput
+          placeholder="ClientSecret"
+          [formControl]="clientSecret"
+        />
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Auth URL" [formControl]="authUrl" />
       </mat-form-field>
-      <button mat-button (click)="saveConfig()">
-        save config
+      <button mat-button (click)="saveProfile()">
+        save profile
       </button>
     </mat-card>
     <mat-card>

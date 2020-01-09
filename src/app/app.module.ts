@@ -6,7 +6,8 @@ import {
   MatCardModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatIconModule
+  MatIconModule,
+  MatListModule
 } from "@angular/material";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -46,6 +47,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
+    MatListModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
