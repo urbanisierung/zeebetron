@@ -10,9 +10,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { HomeComponent } from "./home.component";
 import { SharedModule } from "../shared/shared.module";
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, ProfileComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -2,6 +2,7 @@ export interface Profile {
     name: string;
     zeebe: {
         address: string;
+        oAuthAvailable: boolean;
         oAuth?: {
             clientId: string;
             clientSecret: string;

@@ -1,0 +1,62 @@
+<mat-card *ngIf="profile">
+  <section>
+    <mat-form-field>
+      <input matInput placeholder="Profile name" [formControl]="profileName" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Address" [formControl]="address" />
+    </mat-form-field>
+  </section>
+  <section>
+    <mat-checkbox
+      #oauth
+      (change)="changeOAuthToggle(oauth.checked)"
+      [checked]="oAuth"
+      >OAuth?</mat-checkbox
+    >
+  </section>
+  <section *ngIf="oauth.checked">
+    <mat-form-field>
+      <input matInput placeholder="ClientId" [formControl]="clientId" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="ClientSecret" [formControl]="clientSecret" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Auth URL" [formControl]="authUrl" />
+    </mat-form-field>
+  </section>
+  <button mat-button (click)="saveProfile()">
+    save profile
+  </button>
+  <button mat-button (click)="deleteProfile()">
+    delete profile
+  </button>
+</mat-card>
+<!-- <mat-card>
+  <button mat-button *ngIf="!connected" (click)="connect()">connect</button>
+  <button mat-button *ngIf="connected" (click)="disconnect()">
+    disconnect
+  </button>
+</mat-card>
+<mat-card>
+  <button mat-button *ngIf="connected" (click)="showTopology()">
+    topology
+  </button>
+</mat-card>
+<mat-card *ngIf="topology">
+  <p>{{ topology }}</p>
+</mat-card>
+<mat-card>
+  <button mat-button (click)="selectWorkflow()">Select Workflow</button>
+</mat-card>
+<mat-card *ngIf="workflowFile">
+  <p>{{ workflowFile }}</p>
+  <button mat-button *ngIf="connected" (click)="deployWorkflow()">
+    Deploy workflow
+  </button>
+  <button mat-button *ngIf="connected" (click)="startWorkflow()">
+    Start workflow
+  </button>
+</mat-card> -->
+<div #ref></div>

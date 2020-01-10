@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { Component, ElementRef, ViewChild } from "@angular/core";
+import BpmnViewer from "bpmn-js";
+import { ElectronService } from "../core/services";
 import { ConfigService } from "../core/services/config/config.service";
 import { ZeebeService } from "../core/services/zeebe/zeebe.service";
-import { ElectronService } from "../core/services";
-import BpmnViewer from "bpmn-js";
 import { Profile } from "../core/types/Profiles.type";
 
 @Component({
@@ -11,20 +10,11 @@ import { Profile } from "../core/types/Profiles.type";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   @ViewChild("ref", null) private el: ElementRef;
 
   public profiles: string[];
   public currentProfile: Profile;
-
-  public clusterId = new FormControl();
-  public baseUrl = new FormControl();
-  public profileName = new FormControl();
-  public address = new FormControl();
-  public clientId = new FormControl();
-  public clientSecret = new FormControl();
-  public authUrl = new FormControl();
-  private config;
 
   public topology: string;
   public workflowFile: string;
@@ -45,49 +35,33 @@ export class HomeComponent implements OnInit {
       console.log(JSON.stringify(p));
       this.profiles = p;
     });
-    const promise = this.configService.get();
-    promise.then(c => console.log(JSON.stringify(c)));
-    // const promise = this.configService.get();
-    // promise.then(c => {
-    //   if (c) {
-    //     this.config = c;
-    //     console.log(JSON.stringify(c));
-    //     this.clusterId.setValue(c.clusterId);
-    //     this.baseUrl.setValue(c.baseUrl);
-    //     this.clientId.setValue(c.clientId);
-    //     this.clientSecret.setValue(c.clientSecret);
-    //     this.authUrl.setValue(c.authUrl);
-    //   }
-    // });
   }
 
-  ngOnInit(): void {}
+  async onUpdate(deleted: boolean) {
+    this.profiles = await this.configService.load();
+    if (deleted) {
+      this.currentProfile = null;
+    }
+  }
 
   public addProfile() {
-    this.authUrl.reset();
-    this.clientId.reset();
-    this.clientSecret.reset();
-    this.address.reset();
-    this.profileName.reset();
     this.currentProfile = {
       name: "",
       zeebe: {
-        address: ""
+        address: "",
+        oAuthAvailable: false
       }
     };
   }
 
   public async selectProfile(name: string) {
     this.currentProfile = await this.configService.getProfile(name);
-    this.authUrl.setValue(this.currentProfile.zeebe.oAuth.authzUrl);
-    this.clientId.setValue(this.currentProfile.zeebe.oAuth.clientId);
-    this.clientSecret.setValue(this.currentProfile.zeebe.oAuth.clientSecret);
-    this.address.setValue(this.currentProfile.zeebe.address);
-    this.profileName.setValue(this.currentProfile.name);
   }
 
+/* ******************** */
+
   public async connect() {
-    await this.zeebeService.setup(this.config);
+    // await this.zeebeService.setup(this.config);
     this.connected = true;
   }
 
@@ -110,35 +84,6 @@ export class HomeComponent implements OnInit {
       name: "test"
     });
     console.log(JSON.stringify(result));
-  }
-
-  public async saveProfile() {
-    this.currentProfile = {
-      name: this.profileName.value,
-      zeebe: {
-        address: this.address.value,
-        oAuth: {
-          clientId: this.clientId.value,
-          clientSecret: this.clientSecret.value,
-          authzUrl: this.authUrl.value
-        }
-      }
-    };
-    this.profiles = await this.configService.setProfile(
-      this.profileName.value,
-      this.currentProfile
-    );
-  }
-
-  public async saveConfig() {
-    this.config = {
-      clusterId: this.clusterId.value,
-      baseUrl: this.baseUrl.value,
-      clientId: this.clientId.value,
-      clientSecret: this.clientSecret.value,
-      authUrl: this.authUrl.value
-    };
-    await this.configService.save(this.config);
   }
 
   public async selectWorkflow() {

@@ -35,6 +35,13 @@ export class ConfigService {
     return profile;
   }
 
+  public async deleteProfile(name: string): Promise<string[]> {
+    this.profiles = this.profiles.filter(p => p !== name);
+    await this.store.set(PROFILE_KEY, this.profiles);
+    await this.store.delete(name);
+    return this.profiles;
+  }
+
   public async save(values) {
     await this.store.set("default", values);
   }

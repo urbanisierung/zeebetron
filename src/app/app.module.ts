@@ -7,7 +7,8 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatIconModule,
-  MatListModule
+  MatListModule,
+  MatCheckboxModule
 } from "@angular/material";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -23,6 +24,7 @@ import { AppComponent } from "./app.component";
 import { CoreModule } from "./core/core.module";
 import { HomeComponent } from "./home/home.component";
 import { SharedModule } from "./shared/shared.module";
+import { ProfileComponent } from "./home/profile/profile.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -30,7 +32,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, ProfileComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -48,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatCheckboxModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

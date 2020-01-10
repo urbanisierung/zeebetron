@@ -8,9 +8,11 @@
 <mat-sidenav-container>
   <mat-sidenav #snav [mode]="over">
     <mat-list>
-      <mat-list-item *ngFor="let profile of profiles" (click)="selectProfile(profile); snav.toggle()">{{
-        profile
-      }}</mat-list-item>
+      <mat-list-item
+        *ngFor="let profile of profiles"
+        (click)="selectProfile(profile); snav.toggle()"
+        >{{ profile }}</mat-list-item
+      >
     </mat-list>
     <button mat-button (click)="addProfile(); snav.toggle()">
       add
@@ -24,28 +26,45 @@
     <mat-card *ngIf="!currentProfile">
       select or create a profile
     </mat-card>
-    <mat-card *ngIf="currentProfile">
-      <mat-form-field>
-        <input matInput placeholder="Profile name" [formControl]="profileName" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Address" [formControl]="address" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="ClientId" [formControl]="clientId" />
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="ClientSecret"
-          [formControl]="clientSecret"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Auth URL" [formControl]="authUrl" />
-      </mat-form-field>
+    <profile *ngIf="currentProfile" [profile]="currentProfile" (update)="onUpdate($event)">
+      test
+    </profile>
+    <!-- <mat-card *ngIf="currentProfile">
+      <section>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Profile name"
+            [formControl]="profileName"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Address" [formControl]="address" />
+        </mat-form-field>
+      </section>
+      <section>
+        <mat-checkbox #oauth (change)="changeOAuthToggle(oauth.checked)" [checked]="oAuth">OAuth?</mat-checkbox>
+      </section>
+      <section *ngIf="oauth.checked">
+        <mat-form-field>
+          <input matInput placeholder="ClientId" [formControl]="clientId" />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="ClientSecret"
+            [formControl]="clientSecret"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Auth URL" [formControl]="authUrl" />
+        </mat-form-field>
+      </section>
       <button mat-button (click)="saveProfile()">
         save profile
+      </button>
+      <button mat-button (click)="deleteProfile()">
+        delete profile
       </button>
     </mat-card>
     <mat-card>
@@ -74,6 +93,6 @@
         Start workflow
       </button>
     </mat-card>
-    <div #ref></div>
+    <div #ref></div> -->
   </mat-sidenav-content>
 </mat-sidenav-container>
