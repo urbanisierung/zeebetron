@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Profile } from "../../types/Profiles.type";
 
 @Injectable({
   providedIn: "root"
@@ -6,47 +7,98 @@ import { Injectable } from "@angular/core";
 export class ZeebeService {
   private zeebeClient;
   private zb;
+  private connected = false;
 
   constructor() {
     this.zb = window.require("zeebe-node");
   }
 
-  public async setup(config) {
-    this.zeebeClient = new this.zb.ZBClient(
-      `${config.clusterId}.${config.baseUrl}:443`,
-      {
-        oAuth: {
-          url: config.authUrl,
-          audience: config.clusterId + "." + config.baseUrl,
-          clientId: config.clientId,
-          clientSecret: config.clientSecret,
-          cacheOnDisk: true
+  public async connect(profile: Profile): Promise<boolean> {
+    const oAuth = profile.zeebe.oAuthAvailable
+      ? {
+          oAuth: {
+            url: profile.zeebe.oAuth.authzUrl,
+            audience: profile.zeebe.address.split(":")[0],
+            clientId: profile.zeebe.oAuth.clientId,
+            clientSecret: profile.zeebe.oAuth.clientSecret,
+            cacheOnDisk: true
+          }
         }
-      }
-    );
+      : null;
+    console.log(JSON.stringify("oAuth: " + JSON.stringify(oAuth)));
+    try {
+      this.zeebeClient = await new this.zb.ZBClient(
+        profile.zeebe.address,
+        oAuth
+      );
+      this.connected = true;
+    } catch (e) {
+      console.log(`cannot connect: ${JSON.stringify(e)}`);
+    }
+    return this.connected;
+  }
+
+  public isConnected(): boolean {
+    return this.connected;
   }
 
   public async close() {
     await this.zeebeClient.close();
+    this.connected = false;
   }
 
-  public async getTopology(): Promise<string> {
-    console.log(`fetching topology`);
-    const topology = await this.zeebeClient.topology();
-    return JSON.stringify(topology, null, 2);
+  public async status(
+    profile: Profile,
+    leaveConnectionOpen: boolean = false
+  ): Promise<any> {
+    if (!this.connected) {
+      if (!(await this.connect(profile))) {
+        return `cannot connect to zeebe`;
+      }
+    }
+    const status = await this.zeebeClient.topology();
+    if (!leaveConnectionOpen) {
+      this.close();
+    }
+
+    return status;
   }
 
-  public async startWorkflow(workflowId: string, payload: any): Promise<any> {
+  public async createInstance(
+    profile: Profile,
+    workflowId: string,
+    payload: any,
+    leaveConnectionOpen: boolean = false
+  ): Promise<any> {
+    if (!this.connected) {
+      if (!(await this.connect(profile))) {
+        return `cannot connect to zeebe`;
+      }
+    }
     const result = await this.zeebeClient.createWorkflowInstance(
       workflowId,
       payload
     );
+    if (!leaveConnectionOpen) {
+      this.close();
+    }
     return result;
   }
 
-  public async deployWorkflow(bpmnFile: string): Promise<any> {
-    console.log(`deploying workflow instance`);
+  public async deploy(
+    profile: Profile,
+    bpmnFile: string,
+    leaveConnectionOpen: boolean = false
+  ): Promise<any> {
+    if (!this.connected) {
+      if (!(await this.connect(profile))) {
+        return `cannot connect to zeebe`;
+      }
+    }
     const result = await this.zeebeClient.deployWorkflow(bpmnFile);
+    if (!leaveConnectionOpen) {
+      this.close();
+    }
     return result;
   }
 }

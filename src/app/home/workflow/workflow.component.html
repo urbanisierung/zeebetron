@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-form-field>
+    <input matInput placeholder="Workflow name" [formControl]="workflowName" />
+  </mat-form-field>
+  <button mat-button (click)="selectWorkflow()">
+    select Workflow
+  </button>
+  <mat-list *ngIf="workflow && workflow.bpmnFile">
+    <mat-list-item>
+      <h4 mat-line>{{ workflow.bpmnFile }}</h4>
+      <p mat-line>bpmn file</p>
+    </mat-list-item>
+    <mat-list-item>
+      <h4 mat-line>{{ workflow.workflowId }}</h4>
+      <p mat-line>Workflow Id</p>
+    </mat-list-item>
+  </mat-list>
+  <div #diagram></div>
+</mat-card>

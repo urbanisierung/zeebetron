@@ -25,6 +25,8 @@ import { CoreModule } from "./core/core.module";
 import { HomeComponent } from "./home/home.component";
 import { SharedModule } from "./shared/shared.module";
 import { ProfileComponent } from "./home/profile/profile.component";
+import { WorkflowComponent } from "./home/workflow/workflow.component";
+import { LogComponent } from "./home/log/log.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -32,7 +34,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ProfileComponent],
+  declarations: [AppComponent, HomeComponent, ProfileComponent, WorkflowComponent, LogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

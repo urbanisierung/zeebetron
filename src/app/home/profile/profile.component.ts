@@ -1,7 +1,15 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChange } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChange
+} from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ConfigService } from "../../core/services/config/config.service";
-import { Profile } from "../../core/types/Profiles.type";
+import { Profile, Workflow } from "../../core/types/Profiles.type";
+import { ZeebeService } from "../../core/services/zeebe/zeebe.service";
 
 @Component({
   selector: "profile",
@@ -11,8 +19,10 @@ import { Profile } from "../../core/types/Profiles.type";
 export class ProfileComponent implements OnChanges {
   @Input() profile: Profile;
   @Output() update = new EventEmitter<boolean>();
+  @Output() log = new EventEmitter<string>();
 
   public oAuth = false;
+  public currentWorkflow: Workflow;
 
   public clusterId = new FormControl();
   public baseUrl = new FormControl();
@@ -22,7 +32,10 @@ export class ProfileComponent implements OnChanges {
   public clientSecret = new FormControl();
   public authUrl = new FormControl();
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    public zeebeService: ZeebeService,
+    private configService: ConfigService
+  ) {}
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     let log: string[] = [];
@@ -30,13 +43,13 @@ export class ProfileComponent implements OnChanges {
       let changedProp = changes[propName];
       let to = JSON.stringify(changedProp.currentValue);
       if (changedProp.isFirstChange()) {
-        console.log(`Initial value of ${propName} set to ${to}`);
+        // console.log(`Initial value of ${propName} set to ${to}`);
       } else {
         let from = JSON.stringify(changedProp.previousValue);
-        console.log(`${propName} changed from ${from} to ${to}`);
+        // console.log(`${propName} changed from ${from} to ${to}`);
       }
     }
-    console.log(`NEW VALUE: ${JSON.stringify(this.profile)}`);
+    // console.log(`NEW VALUE: ${JSON.stringify(this.profile)}`);
     this.setProfile();
   }
 
@@ -55,13 +68,11 @@ export class ProfileComponent implements OnChanges {
           authzUrl: this.authUrl.value
         }
       : null;
-    this.profile = {
-      name: this.profileName.value,
-      zeebe: {
-        address: this.address.value,
-        oAuthAvailable: this.oAuth,
-        oAuth
-      }
+    this.profile.name = this.profileName.value;
+    this.profile.zeebe = {
+      address: this.address.value,
+      oAuthAvailable: this.oAuth,
+      oAuth
     };
     await this.configService.setProfile(this.profile.name, this.profile);
     this.update.emit(false);
@@ -69,6 +80,19 @@ export class ProfileComponent implements OnChanges {
 
   public changeOAuthToggle(oAuth: boolean) {
     this.oAuth = oAuth;
+  }
+
+  public async status() {
+    const status = await this.zeebeService.status(this.profile);
+    this.log.emit(JSON.stringify(status, null, 2));
+  }
+
+  public addWorkflow() {
+    this.currentWorkflow = {
+      name: "",
+      bpmnFile: "unset",
+      workflowId: "unset"
+    };
   }
 
   private async setProfile() {

@@ -23,11 +23,12 @@ export class HomeComponent {
   public deployResult: string;
 
   public connected = false;
+  private log: string[] = [];
 
   private viewer = new BpmnViewer();
 
   constructor(
-    private zeebeService: ZeebeService,
+    // private zeebeService: ZeebeService,
     private configService: ConfigService,
     private electronService: ElectronService
   ) {
@@ -44,13 +45,18 @@ export class HomeComponent {
     }
   }
 
+  onLog(log: string) {
+    this.log.push(log);
+  }
+
   public addProfile() {
     this.currentProfile = {
       name: "",
       zeebe: {
         address: "",
         oAuthAvailable: false
-      }
+      },
+      workflows: []
     };
   }
 
@@ -58,33 +64,34 @@ export class HomeComponent {
     this.currentProfile = await this.configService.getProfile(name);
   }
 
-/* ******************** */
-
-  public async connect() {
-    // await this.zeebeService.setup(this.config);
-    this.connected = true;
+  public getLog(): string {
+    return this.log.join("\n");
   }
 
-  public async disconnect() {
-    await this.zeebeService.close();
-    this.connected = false;
-  }
+  /* ******************** */
 
-  public async showTopology() {
-    this.topology = await this.zeebeService.getTopology();
-  }
+  // public async connect() {}
 
-  public async deployWorkflow() {
-    const result = await this.zeebeService.deployWorkflow(this.workflowFile);
-    this.deployResult = JSON.stringify(result);
-  }
+  // public async disconnect() {
+  //   await this.zeebeService.close();
+  //   this.connected = false;
+  // }
 
-  public async startWorkflow() {
-    const result = await this.zeebeService.startWorkflow(this.workflowId, {
-      name: "test"
-    });
-    console.log(JSON.stringify(result));
-  }
+  // public async showTopology() {
+  //   this.topology = await this.zeebeService.status();
+  // }
+
+  // public async deployWorkflow() {
+  //   const result = await this.zeebeService.deploy(this.workflowFile);
+  //   this.deployResult = JSON.stringify(result);
+  // }
+
+  // public async startWorkflow() {
+  //   const result = await this.zeebeService.createInstance(this.workflowId, {
+  //     name: "test"
+  //   });
+  //   console.log(JSON.stringify(result));
+  // }
 
   public async selectWorkflow() {
     this.electronService.remote.dialog

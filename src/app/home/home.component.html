@@ -26,9 +26,10 @@
     <mat-card *ngIf="!currentProfile">
       select or create a profile
     </mat-card>
-    <profile *ngIf="currentProfile" [profile]="currentProfile" (update)="onUpdate($event)">
+    <profile *ngIf="currentProfile" [profile]="currentProfile" (update)="onUpdate($event)" (log)="onLog($event)">
       test
     </profile>
+    <log [log]="getLog()"></log>
     <!-- <mat-card *ngIf="currentProfile">
       <section>
         <mat-form-field>

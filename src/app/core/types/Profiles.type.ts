@@ -13,7 +13,8 @@ export interface Profile {
 }
 
 export interface Workflow {
+    name: string;
     bpmnFile: string;
-    workflowId: string;
+    workflowId: string;    
     payload?: string;
 }

@@ -32,7 +32,16 @@
   <button mat-button (click)="deleteProfile()">
     delete profile
   </button>
+  <button mat-button (click)="status()">
+    status
+  </button>
 </mat-card>
+<mat-card>
+  <button mat-button (click)="addWorkflow()">
+    add workflow
+  </button>
+</mat-card>
+<workflow *ngIf="currentWorkflow" [profile]="profile" [workflow]="currentWorkflow"></workflow>
 <!-- <mat-card>
   <button mat-button *ngIf="!connected" (click)="connect()">connect</button>
   <button mat-button *ngIf="connected" (click)="disconnect()">

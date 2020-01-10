@@ -11,9 +11,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HomeComponent } from "./home.component";
 import { SharedModule } from "../shared/shared.module";
 import { ProfileComponent } from './profile/profile.component';
+import { WorkflowComponent } from './workflow/workflow.component';
+import { LogComponent } from './log/log.component';
 
 @NgModule({
-  declarations: [HomeComponent, ProfileComponent],
+  declarations: [HomeComponent, ProfileComponent, WorkflowComponent, LogComponent],
   imports: [
     CommonModule,
     SharedModule,
