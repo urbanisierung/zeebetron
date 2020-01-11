@@ -1,10 +1,11 @@
 <mat-card *ngIf="profile">
+  <h1>{{profileName.value}}</h1>
   <section>
     <mat-form-field>
-      <input matInput placeholder="Profile name" [formControl]="profileName" />
+      <input matInput placeholder="{{ 'PAGES.HOME.PROFILE.NAME' | translate }}" [formControl]="profileName" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Address" [formControl]="address" />
+      <input matInput placeholder="{{ 'PAGES.HOME.PROFILE.ADDRESS' | translate }}" [formControl]="address" />
     </mat-form-field>
   </section>
   <section>
@@ -17,55 +18,37 @@
   </section>
   <section *ngIf="oauth.checked">
     <mat-form-field>
-      <input matInput placeholder="ClientId" [formControl]="clientId" />
+      <input matInput placeholder="{{ 'PAGES.HOME.PROFILE.CLIENT_ID' | translate }}" [formControl]="clientId" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="ClientSecret" [formControl]="clientSecret" />
+      <input matInput placeholder="{{ 'PAGES.HOME.PROFILE.CLIENT_SECRET' | translate }}" [formControl]="clientSecret" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Auth URL" [formControl]="authUrl" />
+      <input matInput placeholder="{{ 'PAGES.HOME.PROFILE.AUTHZ_URL' | translate }}" [formControl]="authUrl" />
     </mat-form-field>
   </section>
   <button mat-button (click)="saveProfile()">
-    save profile
+    {{ 'PAGES.HOME.PROFILE.SAVE' | translate }}
   </button>
   <button mat-button (click)="deleteProfile()">
-    delete profile
+    {{ 'PAGES.HOME.PROFILE.DELETE' | translate }}
   </button>
   <button mat-button (click)="status()">
-    status
+    {{ 'PAGES.HOME.PROFILE.STATUS' | translate }}
   </button>
 </mat-card>
 <mat-card>
+  <h2>Workflows</h2>
+  <mat-form-field>
+    <mat-label>{{ 'PAGES.HOME.PROFILE.WORKFLOWS' | translate }}</mat-label>
+    <mat-select (selectionChange)="changeWorkflowSelection($event)">
+      <mat-option *ngFor="let workflow of profile.workflows" [value]="workflow">
+        {{workflow.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <button mat-button (click)="addWorkflow()">
-    add workflow
+    {{ 'PAGES.HOME.PROFILE.ADD_WORKFLOW' | translate }}
   </button>
+  <workflow *ngIf="currentWorkflow" [profile]="profile" [workflow]="currentWorkflow"></workflow>
 </mat-card>
-<workflow *ngIf="currentWorkflow" [profile]="profile" [workflow]="currentWorkflow"></workflow>
-<!-- <mat-card>
-  <button mat-button *ngIf="!connected" (click)="connect()">connect</button>
-  <button mat-button *ngIf="connected" (click)="disconnect()">
-    disconnect
-  </button>
-</mat-card>
-<mat-card>
-  <button mat-button *ngIf="connected" (click)="showTopology()">
-    topology
-  </button>
-</mat-card>
-<mat-card *ngIf="topology">
-  <p>{{ topology }}</p>
-</mat-card>
-<mat-card>
-  <button mat-button (click)="selectWorkflow()">Select Workflow</button>
-</mat-card>
-<mat-card *ngIf="workflowFile">
-  <p>{{ workflowFile }}</p>
-  <button mat-button *ngIf="connected" (click)="deployWorkflow()">
-    Deploy workflow
-  </button>
-  <button mat-button *ngIf="connected" (click)="startWorkflow()">
-    Start workflow
-  </button>
-</mat-card> -->
-<div #ref></div>

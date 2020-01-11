@@ -10,6 +10,7 @@ import { FormControl } from "@angular/forms";
 import { ConfigService } from "../../core/services/config/config.service";
 import { Profile, Workflow } from "../../core/types/Profiles.type";
 import { ZeebeService } from "../../core/services/zeebe/zeebe.service";
+import { MatSelectChange } from "@angular/material";
 
 @Component({
   selector: "profile",
@@ -38,18 +39,6 @@ export class ProfileComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    let log: string[] = [];
-    for (let propName in changes) {
-      let changedProp = changes[propName];
-      let to = JSON.stringify(changedProp.currentValue);
-      if (changedProp.isFirstChange()) {
-        // console.log(`Initial value of ${propName} set to ${to}`);
-      } else {
-        let from = JSON.stringify(changedProp.previousValue);
-        // console.log(`${propName} changed from ${from} to ${to}`);
-      }
-    }
-    // console.log(`NEW VALUE: ${JSON.stringify(this.profile)}`);
     this.setProfile();
   }
 
@@ -82,6 +71,10 @@ export class ProfileComponent implements OnChanges {
     this.oAuth = oAuth;
   }
 
+  public changeWorkflowSelection(event: MatSelectChange) {
+    this.currentWorkflow = event.value;
+  }
+
   public async status() {
     const status = await this.zeebeService.status(this.profile);
     this.log.emit(JSON.stringify(status, null, 2));
@@ -97,6 +90,8 @@ export class ProfileComponent implements OnChanges {
 
   private async setProfile() {
     this.resetFields();
+
+    this.currentWorkflow = null;
 
     this.profileName.setValue(this.profile.name);
     this.address.setValue(this.profile.zeebe.address);

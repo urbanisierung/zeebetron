@@ -8,7 +8,8 @@ import {
   MatSidenavModule,
   MatIconModule,
   MatListModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSelectModule
 } from "@angular/material";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -53,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatIconModule,
     MatListModule,
     MatCheckboxModule,
+    MatSelectModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

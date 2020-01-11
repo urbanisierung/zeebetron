@@ -1,18 +1,22 @@
 <mat-card>
+  <h3>{{workflowName.value}}</h3>
   <mat-form-field>
-    <input matInput placeholder="Workflow name" [formControl]="workflowName" />
+    <input matInput placeholder="{{ 'PAGES.HOME.PROFILE.WORKFLOW.NAME' | translate }}" [formControl]="workflowName" />
   </mat-form-field>
   <button mat-button (click)="selectWorkflow()">
-    select Workflow
+    {{ "PAGES.HOME.PROFILE.WORKFLOW.SELECT" | translate }}
+  </button>
+  <button mat-button (click)="saveWorkflow()">
+    {{ "PAGES.HOME.PROFILE.WORKFLOW.SAVE" | translate }}
   </button>
   <mat-list *ngIf="workflow && workflow.bpmnFile">
     <mat-list-item>
       <h4 mat-line>{{ workflow.bpmnFile }}</h4>
-      <p mat-line>bpmn file</p>
+      <p mat-line>{{ "PAGES.HOME.PROFILE.WORKFLOW.BPMN_FILE" | translate }}</p>
     </mat-list-item>
     <mat-list-item>
       <h4 mat-line>{{ workflow.workflowId }}</h4>
-      <p mat-line>Workflow Id</p>
+      <p mat-line>{{ "PAGES.HOME.PROFILE.WORKFLOW.WORKFLOW_ID" | translate }}</p>
     </mat-list-item>
   </mat-list>
   <div #diagram></div>

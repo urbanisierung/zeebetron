@@ -1,7 +1,33 @@
 {
+  "APP": {
+    "TITLE": "zeebetron"
+  },
   "PAGES": {
-      "HOME": {
-          "TITLE": "App works !"
+    "HOME": {
+      "ADD_PROFILE": "Add",
+      "SELECT_OR_CREATE_PROFILE": "Select or create a profile",
+      "PROFILE": {
+        "NAME": "Profile name",
+        "ADDRESS": "Adress",
+        "CLIENT_ID": "ClientId",
+        "CLIENT_SECRET": "Client secret",
+        "AUTHZ_URL": "Authz URL",
+        "SAVE": "Save profile",
+        "DELETE": "Delete profile",
+        "STATUS": "Status",
+        "WORKFLOWS": "Workflows in profile",
+        "ADD_WORKFLOW": "Add workflow",
+        "WORKFLOW": {
+          "NAME": "Workflow name",
+          "SELECT": "Select workflow",
+          "SAVE": "Save workflow",
+          "BPMN_FILE": "BPMN file",
+          "WORKFLOW_ID": "Workflow Id"
+        }
+      },
+      "LOGS": {
+        "PLACEHOLDER": "Zeebe logs"
       }
+    }
   }
 }
