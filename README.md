@@ -17,6 +17,10 @@ The added value of zeebetron is
 
 The tool itself is built with [Electron](https://electronjs.org/) and [Angular](https://angular.io/). The communication with zeebe is done via [zeebe-node](https://github.com/creditsenseau/zeebe-client-node-js), the rendering of BPMN diagrams is done using [bpmn-js](https://github.com/bpmn-io/bpmn-js).
 
+## Releases
+
+Find all releases [here](https://github.com/urbanisierung/zeebetron/releases).
+
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
