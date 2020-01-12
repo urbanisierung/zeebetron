@@ -8,6 +8,8 @@
 
 `zeebetron` is a small frontend to manage different profiles for zeebe instances (cloud or local).
 
+![gif](./media/zeebetron-m.gif)
+
 Usually I use `zbctl` or my own small starter project to interact with zeebe. But since I had a lot of zeebe instances and I was switching between them, I wanted to build a small tool to manage profiles.
 
 The added value of zeebetron is
