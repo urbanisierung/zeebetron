@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "6.4.1",
-  "description": "Angular 8 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "zeebetron",
+  "version": "1.0.0",
+  "description": "small UI for zeebe control",
+  "homepage": "https://github.com/urbanisierung/zeebetron",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Adam Urban",
+    "email": "adam.urban@gmail.com"
   },
   "keywords": [
     "angular",
