@@ -1,11 +1,17 @@
 {
   "APP": {
-    "TITLE": "zeebetron"
+    "TITLE": "zeebetron",
+    "WEBSITE": "https://github.com/urbanisierung/zeebtron"
   },
   "PAGES": {
     "HOME": {
+      "TITLE": "Home",
+      "WELCOME": "Welcome to zeebetron!",
+      "INTRODUCTION": "With zeebetron you can manage profiles, each of which represents a connection to an instance of zeebe.",
+      "YOUR_PROFILES": "Your profiles",
       "ADD_PROFILE": "Add",
       "SELECT_OR_CREATE_PROFILE": "Select or create a profile",
+      "LOG": "Zeebe communication log",
       "PROFILE": {
         "NAME": "Profile name",
         "ADDRESS": "Adress",
@@ -19,10 +25,13 @@
         "ADD_WORKFLOW": "Add workflow",
         "WORKFLOW": {
           "NAME": "Workflow name",
-          "SELECT": "Select workflow",
+          "SELECT": "Open workflow definition",
           "SAVE": "Save workflow",
           "BPMN_FILE": "BPMN file",
-          "WORKFLOW_ID": "Workflow Id"
+          "WORKFLOW_ID": "Workflow Id",
+          "DEPLOY": "Deploy",
+          "CREATE_INSTANCE": "Create instance",
+          "PAYLOAD_PLACEHOLDER": "Add payload"
         }
       },
       "LOGS": {

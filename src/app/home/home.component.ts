@@ -16,19 +16,7 @@ export class HomeComponent {
   public profiles: string[];
   public currentProfile: Profile;
 
-  public topology: string;
-  public workflowFile: string;
-  public workflowId: string;
-  public workflowFileContent: string;
-  public deployResult: string;
-
-  public connected = false;
-  private log: string[] = [];
-
-  private viewer = new BpmnViewer();
-
   constructor(
-    // private zeebeService: ZeebeService,
     private configService: ConfigService,
     private electronService: ElectronService
   ) {
@@ -43,10 +31,6 @@ export class HomeComponent {
     if (deleted) {
       this.currentProfile = null;
     }
-  }
-
-  onLog(log: string) {
-    this.log.push(log);
   }
 
   public addProfile() {
@@ -64,66 +48,4 @@ export class HomeComponent {
     this.currentProfile = await this.configService.getProfile(name);
   }
 
-  public getLog(): string {
-    return this.log.join("\n");
-  }
-
-  /* ******************** */
-
-  // public async connect() {}
-
-  // public async disconnect() {
-  //   await this.zeebeService.close();
-  //   this.connected = false;
-  // }
-
-  // public async showTopology() {
-  //   this.topology = await this.zeebeService.status();
-  // }
-
-  // public async deployWorkflow() {
-  //   const result = await this.zeebeService.deploy(this.workflowFile);
-  //   this.deployResult = JSON.stringify(result);
-  // }
-
-  // public async startWorkflow() {
-  //   const result = await this.zeebeService.createInstance(this.workflowId, {
-  //     name: "test"
-  //   });
-  //   console.log(JSON.stringify(result));
-  // }
-
-  public async selectWorkflow() {
-    this.electronService.remote.dialog
-      .showOpenDialog({
-        filters: [{ name: "bpmn", extensions: ["bpmn"] }],
-        properties: ["openFile"]
-      })
-      .then(dialogResponse => {
-        if (!dialogResponse.canceled) {
-          this.workflowFile = dialogResponse.filePaths[0];
-          const raw: Buffer = this.electronService.fs.readFileSync(
-            this.workflowFile
-          );
-          this.workflowFileContent = raw.toString();
-          const parser = require("fast-xml-parser");
-          const options = {
-            attributeNamePrefix: "",
-            ignoreAttributes: false
-          };
-          const json = parser.parse(this.workflowFileContent, options);
-          this.workflowId = json["bpmn:definitions"]["bpmn:process"].id;
-          // this.viewer.destroy();
-          this.viewer.importXML(this.workflowFileContent, error => {
-            if (!error) {
-              console.log("success!");
-              this.viewer.get("canvas").zoom("fit-viewport");
-            } else {
-              console.log("something went wrong:", error);
-            }
-          });
-          this.viewer.attachTo(this.el.nativeElement);
-        }
-      });
-  }
 }

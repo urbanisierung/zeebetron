@@ -8,11 +8,18 @@
 <mat-sidenav-container>
   <mat-sidenav #snav [mode]="over">
     <mat-list>
-      <mat-list-item
-        *ngFor="let profile of profiles"
-        (click)="selectProfile(profile); snav.toggle()"
-        >{{ profile }}</mat-list-item
-      >
+      <mat-list-item>
+        <mat-icon mat-list-icon>stars</mat-icon>
+        <h4 mat-line (click)="currentProfile = null; snav.toggle()">{{ 'PAGES.HOME.TITLE' | translate }}</h4>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <mat-list>
+      <mat-list-item *ngFor="let last = last; let profile of profiles">
+        <mat-icon mat-list-icon>subject</mat-icon>
+        <h4 mat-line (click)="selectProfile(profile); snav.toggle()">{{profile}}</h4>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </mat-list-item>
     </mat-list>
     <button mat-button (click)="addProfile(); snav.toggle()">
       {{ 'PAGES.HOME.ADD_PROFILE' | translate }}
@@ -21,15 +28,26 @@
 
   <mat-sidenav-content>
     <mat-card *ngIf="!currentProfile">
-      {{ 'PAGES.HOME.SELECT_OR_CREATE_PROFILE' | translate }}
+      <h1>{{ 'PAGES.HOME.WELCOME' | translate }}</h1>
+      <p>{{ 'PAGES.HOME.INTRODUCTION' | translate }}</p>
+      <h2>{{ 'PAGES.HOME.YOUR_PROFILES' | translate }}</h2>
+      <button mat-button (click)="addProfile(); snav.toggle()">
+        {{ 'PAGES.HOME.ADD_PROFILE' | translate }}
+      </button>
+      <mat-list>
+        <mat-list-item *ngFor="let last = last; let profile of profiles">
+          <mat-icon mat-list-icon>subject</mat-icon>
+          <h4 mat-line (click)="selectProfile(profile)">{{profile}}</h4>
+          <mat-divider *ngIf="!last"></mat-divider>
+        </mat-list-item>
+      </mat-list>      
     </mat-card>
     <profile
       *ngIf="currentProfile"
       [profile]="currentProfile"
       (update)="onUpdate($event)"
-      (log)="onLog($event)"
     >
     </profile>
-    <log [log]="getLog()"></log>
+    <log></log>
   </mat-sidenav-content>
 </mat-sidenav-container>

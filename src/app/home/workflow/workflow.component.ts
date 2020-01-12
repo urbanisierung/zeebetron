@@ -11,6 +11,7 @@ import { ElectronService } from "../../core/services";
 import { ConfigService } from "../../core/services/config/config.service";
 import { Profile, Workflow } from "../../core/types/Profiles.type";
 import { FormControl } from "@angular/forms";
+import { ZeebeService } from "../../core/services/zeebe/zeebe.service";
 
 @Component({
   selector: "workflow",
@@ -24,12 +25,14 @@ export class WorkflowComponent implements OnChanges {
   @Input() workflow: Workflow;
 
   public workflowName = new FormControl();
+  public instancePayload = new FormControl();
   private viewer = new BpmnViewer();
   private workflowFileContent;
 
   constructor(
     private electronService: ElectronService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private zeebeService: ZeebeService
   ) {}
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -63,17 +66,43 @@ export class WorkflowComponent implements OnChanges {
 
   public saveWorkflow() {
     this.workflow.name = this.workflowName.value;
+    this.workflow.payload = this.instancePayload.value;
     if (this.profile.workflows) {
-      this.profile.workflows.push(this.workflow);
+      if (
+        this.profile.workflows.filter(
+          w =>
+            w.name === this.workflow.name &&
+            w.workflowId === this.workflow.workflowId
+        ).length === 0
+      ) {
+        this.profile.workflows.push(this.workflow);
+      }
     } else {
       this.profile.workflows = [this.workflow];
     }
     this.configService.setProfile(this.profile.name, this.profile);
   }
 
+  public async deployWorkflow() {
+    await this.zeebeService.deploy(this.profile, this.workflow.bpmnFile);
+  }
+
+  public async createInstance() {
+    const payload = this.instancePayload.value
+      ? JSON.parse(this.instancePayload.value)
+      : {};
+    await this.zeebeService.createInstance(
+      this.profile,
+      this.workflow.workflowId,
+      payload
+    );
+  }
+
   private setWorkflow() {
     this.workflowName.reset();
+    this.instancePayload.reset();
     this.workflowName.setValue(this.workflow.name);
+    this.instancePayload.setValue(this.workflow.payload);
     if (this.workflow.name && this.workflow.name.length > 0) {
       this.displayWorkflow();
     }

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Profile } from "../../types/Profiles.type";
+import { ZeebeLogService } from "./zeebeLog.service";
 
 @Injectable({
   providedIn: "root"
@@ -9,7 +10,7 @@ export class ZeebeService {
   private zb;
   private connected = false;
 
-  constructor() {
+  constructor(private zeebeLogService: ZeebeLogService) {
     this.zb = window.require("zeebe-node");
   }
 
@@ -33,7 +34,7 @@ export class ZeebeService {
       );
       this.connected = true;
     } catch (e) {
-      console.log(`cannot connect: ${JSON.stringify(e)}`);
+      this.zeebeLogService.add(`cannot connect: ${JSON.stringify(e)}`);
     }
     return this.connected;
   }
@@ -51,12 +52,14 @@ export class ZeebeService {
     profile: Profile,
     leaveConnectionOpen: boolean = false
   ): Promise<any> {
+    this.zeebeLogService.add(`$ status for ${profile.name}`);
     if (!this.connected) {
       if (!(await this.connect(profile))) {
         return `cannot connect to zeebe`;
       }
     }
     const status = await this.zeebeClient.topology();
+    this.zeebeLogService.add(JSON.stringify(status, null, 2));
     if (!leaveConnectionOpen) {
       this.close();
     }
@@ -70,6 +73,7 @@ export class ZeebeService {
     payload: any,
     leaveConnectionOpen: boolean = false
   ): Promise<any> {
+    this.zeebeLogService.add(`$ creating instance for profile ${profile.name} and workflow id ${workflowId}`);
     if (!this.connected) {
       if (!(await this.connect(profile))) {
         return `cannot connect to zeebe`;
@@ -79,6 +83,7 @@ export class ZeebeService {
       workflowId,
       payload
     );
+    this.zeebeLogService.add(JSON.stringify(result, null, 2));
     if (!leaveConnectionOpen) {
       this.close();
     }
@@ -90,12 +95,14 @@ export class ZeebeService {
     bpmnFile: string,
     leaveConnectionOpen: boolean = false
   ): Promise<any> {
+    this.zeebeLogService.add(`$ deploying to profile ${profile.name}`);
     if (!this.connected) {
       if (!(await this.connect(profile))) {
         return `cannot connect to zeebe`;
       }
     }
     const result = await this.zeebeClient.deployWorkflow(bpmnFile);
+    this.zeebeLogService.add(JSON.stringify(result, null, 2));
     if (!leaveConnectionOpen) {
       this.close();
     }

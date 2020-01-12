@@ -1,3 +1,10 @@
-<mat-card>
-    <textarea matInput disabled style="width:100%; height: 100px" placeholder="{{ 'PAGES.HOME.LOGS.PLACEHOLDER' | translate }}">{{log}}</textarea>
+<mat-card *ngIf="zeebeLogService.logs().length > 0">
+  <h1>{{ 'PAGES.HOME.LOG' | translate }}</h1>
+  <div class="window">
+    <div class="terminal">
+      <div *ngFor="let log of zeebeLogService.logs()">
+        {{ log }}
+      </div>
+    </div>
+  </div>
 </mat-card>

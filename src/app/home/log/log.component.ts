@@ -1,13 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from "@angular/core";
+import { ZeebeLogService } from "../../core/services/zeebe/zeebeLog.service";
 
 @Component({
-  selector: 'log',
-  templateUrl: './log.component.html',
-  styleUrls: ['./log.component.scss']
+  selector: "log",
+  templateUrl: "./log.component.html",
+  styleUrls: ["./log.component.scss"]
 })
 export class LogComponent {
-
-  @Input() log: string;
-
-  constructor() { }
+  constructor(public zeebeLogService: ZeebeLogService) {}
 }

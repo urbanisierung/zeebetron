@@ -1,6 +1,6 @@
 <mat-card>
   <h3>{{workflowName.value}}</h3>
-  <mat-form-field>
+  <mat-form-field class="zeebetron-form">
     <input matInput placeholder="{{ 'PAGES.HOME.PROFILE.WORKFLOW.NAME' | translate }}" [formControl]="workflowName" />
   </mat-form-field>
   <button mat-button (click)="selectWorkflow()">
@@ -8,6 +8,18 @@
   </button>
   <button mat-button (click)="saveWorkflow()">
     {{ "PAGES.HOME.PROFILE.WORKFLOW.SAVE" | translate }}
+  </button>
+  <button mat-button (click)="deployWorkflow()">
+    {{ "PAGES.HOME.PROFILE.WORKFLOW.DEPLOY" | translate }}
+  </button>
+  <textarea
+    matInput
+    class="zeebetron-instance-payload"
+    placeholder="{{ 'PAGES.HOME.PROFILE.WORKFLOW.PAYLOAD_PLACEHOLDER' | translate }}"
+    [formControl]="instancePayload"
+    ></textarea>
+  <button mat-button (click)="createInstance()">
+    {{ "PAGES.HOME.PROFILE.WORKFLOW.CREATE_INSTANCE" | translate }}
   </button>
   <mat-list *ngIf="workflow && workflow.bpmnFile">
     <mat-list-item>

@@ -1,4 +1,4 @@
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
@@ -6,4 +6,13 @@ body {
   padding: 0;
 
   height: 100%;
+}
+
+.zeebetron-form {
+  width: 100%;
+}
+
+.zeebetron-instance-payload {
+  width: 100%;
+  height: 100px;
 }
