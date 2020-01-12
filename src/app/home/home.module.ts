@@ -1,21 +1,16 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
-import { HomeRoutingModule } from "./home-routing.module";
+import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
-import { HomeComponent } from "./home.component";
 import { SharedModule } from "../shared/shared.module";
-import { ProfileComponent } from './profile/profile.component';
-import { WorkflowComponent } from './workflow/workflow.component';
-import { LogComponent } from './log/log.component';
+import { HomeRoutingModule } from "./home-routing.module";
+
+
 
 @NgModule({
-  declarations: [HomeComponent, ProfileComponent, WorkflowComponent, LogComponent],
   imports: [
     CommonModule,
     SharedModule,
