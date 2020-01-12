@@ -1,109 +1,65 @@
-[![Angular Logo](https://www.vectorlogo.zone/logos/angular/angular-icon.svg)](https://angular.io/) [![Electron Logo](https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg)](https://electronjs.org/)
+# `zeebetron`
 
-![Maintained][maintained-badge]
-[![Travis Build Status][build-badge]][build]
-[![Make a pull request][prs-badge]][prs]
-[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
+![GitHub repo size](https://img.shields.io/github/repo-size/urbanisierung/zeebetron)
+![GitHub contributors](https://img.shields.io/github/contributors/urbanisierung/zeebetron)
+![GitHub stars](https://img.shields.io/github/stars/urbanisierung/zeebetron?style=social)
+![GitHub forks](https://img.shields.io/github/forks/urbanisierung/zeebetron?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/urbanisierung?style=social)
 
-[![Watch on GitHub][github-watch-badge]][github-watch]
-[![Star on GitHub][github-star-badge]][github-star]
-[![Tweet][twitter-badge]][twitter]
+`zeebetron` is a small frontend to manage different profiles for zeebe instances (cloud or local).
 
-# Introduction
+Usually I use `zbctl` or my own small starter project to interact with zeebe. But since I had a lot of zeebe instances and I was switching between them, I wanted to build a small tool to manage profiles.
 
-Bootstrap and package your project with Angular 8 and Electron (Typescript + SASS + Hot Reload) for creating Desktop applications.
+The added value of zeebetron is
 
-Currently runs with:
+* Manage different profiles including addresses and if necessary oAuth information
+* Manage different workflows for deploying or creating new instances
 
-- Angular v8.2.14
-- Electron v7.1.7
-- Electron Builder v21.2.0
+The tool itself is built with [Electron](https://electronjs.org/) and [Angular](https://angular.io/). The communication with zeebe is done via [zeebe-node](https://github.com/creditsenseau/zeebe-client-node-js), the rendering of BPMN diagrams is done using [bpmn-js](https://github.com/bpmn-io/bpmn-js).
 
-With this sample, you can :
+## Prerequisites
 
-- Run your app in a local development environment with Electron & Hot reload
-- Run your app in a production environment
-- Package your app into an executable file for Linux, Windows & Mac
+Before you begin, ensure you have met the following requirements:
 
-/!\ Hot reload only pertains to the renderer process. The main electron process is not able to be hot reloaded, only restarted.
+* You have installed node.
 
-/!\ Angular 8.x CLI needs Node 10.9 or later to works correctly.
+That's it ;) Admittedly, I didn't test the project on Windows, but it runs fine on Ubuntu and Mac.
 
-## Getting Started
+## Development
 
-Clone this repository locally :
+Install all dependencies with
 
-``` bash
-git clone https://github.com/maximegris/angular-electron.git
-```
-
-Install dependencies with npm :
-
-``` bash
+```bash
 npm install
 ```
 
-There is an issue with `yarn` and `node_modules` when the application is built by the packager. Please use `npm` as dependencies manager.
+Run the development version of the app including hot reload:
 
-
-If you want to generate Angular components with Angular-cli , you **MUST** install `@angular/cli` in npm global context.
-Please follow [Angular-cli documentation](https://github.com/angular/angular-cli) if you had installed a previous version of `angular-cli`.
-
-``` bash
-npm install -g @angular/cli
+```bash
+npm run start
 ```
 
-## To build for development
+Build a release:
 
-- **in a terminal window** -> npm start
+```bash
+npm run electron:linux # (or mac or windows)
+```
 
-Voila! You can use your Angular + Electron app in a local development environment with hot reload !
+## Contributing to `zeebetron`
 
-The application code is managed by `main.ts`. In this sample, the app runs with a simple Angular App (http://localhost:4200) and an Electron window.
-The Angular component contains an example of Electron and NodeJS native lib import.
-You can disable "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
+To contribute to `zeebetron`, follow these steps:
 
-## Included Commands
+1. Fork this repository.
+2. Create a branch: `git checkout -b <branch_name>`.
+3. Make your changes and commit them: `git commit -m '<commit_message>'`
+4. Create the pull request to this project.
 
-|Command|Description|
-|--|--|
-|`npm run ng:serve:web`| Execute the app in the browser |
-|`npm run build`| Build the app. Your built files are in the /dist folder. |
-|`npm run build:prod`| Build the app with Angular aot. Your built files are in the /dist folder. |
-|`npm run electron:local`| Builds your application and start electron
-|`npm run electron:linux`| Builds your application and creates an app consumable on linux system |
-|`npm run electron:windows`| On a Windows OS, builds your application and creates an app consumable in windows 32/64 bit systems |
-|`npm run electron:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Mac |
+Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-**Your application is optimised. Only /dist folder and node dependencies are included in the executable.**
+## Contact
 
-## You want to use a specific lib (like rxjs) in electron main thread ?
+If you want to contact me you can reach me at [adam.urban@gmail.com](mailto:adamurban@gmail.com).
 
-YES! You can do it! Just by importing your library in npm dependencies section (not **devDependencies**) with `npm install --save`. It will be loaded by electron during build phase and added to your final package. Then use your library by importing it in `main.ts` file. Quite simple, isn't it ?
+## License
 
-## Browser mode
-
-Maybe you want to execute the application in the browser with hot reload ? Just run `npm run ng:serve:web`.
-**Note that you can't use Electron or NodeJS native libraries in this case.** Please check `providers/electron.service.ts` to watch how conditional import of electron/Native libraries is done.
-
-## Branch & Packages version
-
-- Angular 4 & Electron 1 : Branch [angular4](https://github.com/maximegris/angular-electron/tree/angular4)
-- Angular 5 & Electron 1 : Branch [angular5](https://github.com/maximegris/angular-electron/tree/angular5)
-- Angular 6 & Electron 3 : Branch [angular6](https://github.com/maximegris/angular-electron/tree/angular6)
-- Angular 7 & Electron 3 : Branch [angular7](https://github.com/maximegris/angular-electron/tree/angular7)
-- Angular 8 & Electron 7 : (master)
-
-[build-badge]: https://travis-ci.org/maximegris/angular-electron.svg?branch=master&style=style=flat-square
-[build]: https://travis-ci.org/maximegris/angular-electron
-[license-badge]: https://img.shields.io/badge/license-Apache2-blue.svg?style=style=flat-square
-[license]: https://github.com/maximegris/angular-electron/blob/master/LICENSE.md
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[prs]: http://makeapullrequest.com
-[github-watch-badge]: https://img.shields.io/github/watchers/maximegris/angular-electron.svg?style=social
-[github-watch]: https://github.com/maximegris/angular-electron/watchers
-[github-star-badge]: https://img.shields.io/github/stars/maximegris/angular-electron.svg?style=social
-[github-star]: https://github.com/maximegris/angular-electron/stargazers
-[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20angular-electron!%20https://github.com/maximegris/angular-electron%20%F0%9F%91%8D
-[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/maximegris/angular-electron.svg?style=social
-[maintained-badge]: https://img.shields.io/badge/maintained-yes-brightgreen
+This project uses the following license: [MIT](./MIT.md).
