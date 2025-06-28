@@ -1,0 +1,271 @@
+{
+  "version": 1,
+  "dashboards": [
+    {
+      "id": "d0",
+      "name": "default"
+    },
+    {
+      "id": "d1",
+      "name": "work"
+    },
+    {
+      "id": "d2",
+      "name": "side-projects"
+    },
+    {
+      "id": "d3",
+      "name": "private"
+    },
+    {
+      "id": "d4",
+      "name": "rss"
+    },
+    {
+      "id": "d5",
+      "name": "pbb"
+    }
+  ],
+  "entries": [
+    {
+      "path": "camunda/working-time.timetracking.csv",
+      "dashboard": "d1",
+      "skipOnMobile": false
+    },
+    {
+      "path": "habits/read-10-minutes.habit.csv",
+      "dashboard": "d0",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/life-os/backlog.todos.md",
+      "dashboard": "d2",
+      "skipOnMobile": false
+    },
+    {
+      "path": "finance/income-outcome.budget.csv",
+      "dashboard": "d3",
+      "skipOnMobile": false
+    },
+    {
+      "path": "camunda/work-birthdays.events.csv",
+      "dashboard": "d1",
+      "skipOnMobile": false
+    },
+    {
+      "path": "finance/cash.data-collection.csv",
+      "dashboard": "d3",
+      "skipOnMobile": false
+    },
+    {
+      "path": "camunda/next-tasks.todos.md",
+      "dashboard": "d1",
+      "skipOnMobile": false
+    },
+    {
+      "path": "family/Vacation.events.csv",
+      "dashboard": "d3",
+      "skipOnMobile": false
+    },
+    {
+      "path": "camunda/Events.events.csv",
+      "dashboard": "d1",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/life-os/mvp-topics.todos.md",
+      "dashboard": "d2",
+      "skipOnMobile": false
+    },
+    {
+      "path": "family/birthdays.events.csv",
+      "dashboard": "d0",
+      "skipOnMobile": false
+    },
+    {
+      "path": "hackernews.rss.json",
+      "dashboard": "d4",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/weeklyfoo/new-features.todos.md",
+      "dashboard": "d2",
+      "skipOnMobile": false
+    },
+    {
+      "path": "family/todos/daily-todos.todos.md",
+      "dashboard": "d3",
+      "skipOnMobile": false
+    },
+    {
+      "path": "family/School Holidays.events.csv",
+      "dashboard": "d3",
+      "skipOnMobile": false
+    },
+    {
+      "path": "engineering.rss.json",
+      "dashboard": "d4",
+      "skipOnMobile": false
+    },
+    {
+      "path": "personal-brand-building/blog-posts.todos.md",
+      "dashboard": "d5",
+      "skipOnMobile": false
+    },
+    {
+      "path": "personal-brand-building/social-profiles.todos.md",
+      "dashboard": "d5",
+      "skipOnMobile": false
+    },
+    {
+      "path": "personal-brand-building/social-activity.todos.md",
+      "dashboard": "d5",
+      "skipOnMobile": false
+    },
+    {
+      "path": "personal-brand-building/weeklyfoo.todos.md",
+      "dashboard": "d5",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/side-projects-next.todos.md",
+      "dashboard": "d2",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/tools-to-try-out.todos.md",
+      "dashboard": "d2",
+      "skipOnMobile": false
+    },
+    {
+      "path": "finance/Elstal Berlin Gold1936.todos.md",
+      "dashboard": "d3",
+      "skipOnMobile": false
+    },
+    {
+      "path": "camunda/working-time.timetracking.csv",
+      "dashboard": "work",
+      "skipOnMobile": false
+    },
+    {
+      "path": "habits/read-10-minutes.habit.csv",
+      "dashboard": "default",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/life-os/backlog.todos.md",
+      "dashboard": "side-projects",
+      "skipOnMobile": false
+    },
+    {
+      "path": "finance/income-outcome.budget.csv",
+      "dashboard": "private",
+      "skipOnMobile": false
+    },
+    {
+      "path": "camunda/work-birthdays.events.csv",
+      "dashboard": "work",
+      "skipOnMobile": false
+    },
+    {
+      "path": "finance/cash.data-collection.csv",
+      "dashboard": "private",
+      "skipOnMobile": false
+    },
+    {
+      "path": "camunda/next-tasks.todos.md",
+      "dashboard": "work",
+      "skipOnMobile": false
+    },
+    {
+      "path": "family/Vacation.events.csv",
+      "dashboard": "private",
+      "skipOnMobile": false
+    },
+    {
+      "path": "camunda/Events.events.csv",
+      "dashboard": "work",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/life-os/mvp-topics.todos.md",
+      "dashboard": "side-projects",
+      "skipOnMobile": false
+    },
+    {
+      "path": "family/birthdays.events.csv",
+      "dashboard": "default",
+      "skipOnMobile": false
+    },
+    {
+      "path": "hackernews.rss.json",
+      "dashboard": "rss",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/weeklyfoo/new-features.todos.md",
+      "dashboard": "side-projects",
+      "skipOnMobile": false
+    },
+    {
+      "path": "family/todos/daily-todos.todos.md",
+      "dashboard": "default",
+      "skipOnMobile": false
+    },
+    {
+      "path": "family/School Holidays.events.csv",
+      "dashboard": "private",
+      "skipOnMobile": false
+    },
+    {
+      "path": "engineering.rss.json",
+      "dashboard": "rss",
+      "skipOnMobile": false
+    },
+    {
+      "path": "personal-brand-building/blog-posts.todos.md",
+      "dashboard": "pbb",
+      "skipOnMobile": false
+    },
+    {
+      "path": "personal-brand-building/social-profiles.todos.md",
+      "dashboard": "pbb",
+      "skipOnMobile": false
+    },
+    {
+      "path": "personal-brand-building/social-activity.todos.md",
+      "dashboard": "pbb",
+      "skipOnMobile": false
+    },
+    {
+      "path": "personal-brand-building/weeklyfoo.todos.md",
+      "dashboard": "pbb",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/side-projects-next.todos.md",
+      "dashboard": "side-projects",
+      "skipOnMobile": false
+    },
+    {
+      "path": "projects/tools-to-try-out.todos.md",
+      "dashboard": "side-projects",
+      "skipOnMobile": false
+    },
+    {
+      "path": "finance/Elstal Berlin Gold1936.todos.md",
+      "dashboard": "private",
+      "skipOnMobile": false
+    }
+  ],
+  "files": {
+    "selected": "README.md",
+    "opened": [
+      "README.md"
+    ],
+    "recentlyOpened": [
+      "README.md",
+      "camunda/console.actionlog.md"
+    ]
+  }
+}
